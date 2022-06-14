@@ -16,8 +16,20 @@
   height: calc(64px*8);
   display: flex;
   flex-wrap: wrap;
+  transform: rotate(360deg)
+  /* animation: rotate .3s linear infinite;  */
+}
+
+@keyframes rotate {
+  0% {
+  transform: rotate(0deg);
+}
+100% {
+  transform: rotate(360deg);
+}
 
 }
+
 
 .cell {
   width: 64px;
@@ -43,4 +55,11 @@
 
 .selected {
     background-color: brown;
+}
+
+.availible {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: green;
 }

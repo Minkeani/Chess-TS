@@ -12,7 +12,10 @@ interface PropsBoard {
 const  BoardComponents: FC<PropsBoard>=({board, setBoard}) =>{
 
   function click(cell: Cell) {
-    setSelectedCell(cell)
+    if(cell.figure) {
+      setSelectedCell(cell)
+    }
+    
   }
 
   const [selectedCell, setSelectedCell] = useState<Cell | null>(null)
@@ -23,6 +26,7 @@ const  BoardComponents: FC<PropsBoard>=({board, setBoard}) =>{
         <React.Fragment key={index}>
             {row.map(cell => 
               <CellsComponent
+                click={click}
                 cell={cell}
                 key={cell.id}
                 selected={cell.x === selectedCell?.x && cell.y === selectedCell?.y}
