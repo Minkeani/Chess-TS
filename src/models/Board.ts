@@ -6,10 +6,14 @@ import { King } from "./figuers/King"
 import { Bishop } from "./figuers/Bishop"
 import { Knight } from "./figuers/Knight"
 import { Rook } from "./figuers/Rook"
+import { Figure } from "./figuers/Figure"
 
 
 export class Board {
     cells: Cell[][] = []
+    lostBlackFigurs: Figure[] = [];
+    lostWhiteFigurs: Figure[] = [];
+
 
     public initCells() {
         for (let i = 0; i < 8; i++) {
@@ -24,6 +28,26 @@ export class Board {
           this.cells.push(row);
         }
       } 
+
+    public getCopyBoard(): Board {
+      const newBoard = new Board();
+      newBoard.cells = this.cells
+      newBoard.lostWhiteFigurs = this.lostWhiteFigurs
+      newBoard.lostBlackFigurs = this.lostBlackFigurs
+
+      return newBoard
+    }
+
+    public highlightCells(selectedCell: Cell | null) {
+      for(let i = 0; i < this.cells.length; i++) {
+          const row = this.cells[i]
+          for(let j = 0; j < row.length; j++) {
+              const target = row[j]
+              target.available = !!selectedCell?.figure?.canMove(target)
+          }
+      }
+    }
+
     public getCell(x: number, y: number) {
         return this.cells[y][x]
     }
@@ -36,6 +60,8 @@ export class Board {
         }
        
       }
+
+      
     
       private addKings() {
             new King(Colors.BLACK, this.getCell(4, 0))
